@@ -7,6 +7,7 @@ import {
   StyleSheet,
   Text,
   View,
+  LogBox
 } from 'react-native';
 import Details from './component/Details';
 import Login from './component/Login';
@@ -15,11 +16,17 @@ import { DataProvider } from './context/DataContext';
 
 const App = () => {
   const Stack = createNativeStackNavigator();
+  // LogBox.ignoreAllLogs();
 
   return (
     <DataProvider>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName='Login'>
+        <Stack.Navigator
+          initialRouteName='Login'
+          screenOptions={{
+            header: () => null
+          }}
+        >
           <Stack.Screen name='Login' component={Login} />
           <Stack.Screen name='Signup' component={Signup} />
           <Stack.Screen name='Details' component={Details} />

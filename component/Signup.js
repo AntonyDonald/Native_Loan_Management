@@ -3,11 +3,13 @@ import React, { useContext, useEffect, useState } from 'react';
 import {
   Alert,
   Button,
-  SafeAreaView,
+  ImageBackground,
   Text,
   TextInput,
   View,
   StyleSheet,
+  Pressable,
+  TouchableOpacity
 } from 'react-native';
 import DataContext from '../context/DataContext';
 
@@ -24,6 +26,11 @@ const Signup = ({ navigation }) => {
     setRetypePassword("")
   }, [])
 
+
+  const handleCancel = () => {
+    navigation.navigate('Login')
+  }
+
   const handleSignUp = async () => {
     var data = {
       name: userName,
@@ -34,7 +41,6 @@ const Signup = ({ navigation }) => {
     if (setFilter.length === 0) {
       setUserList(newUserList);
     }
-
     const filtered = userList.filter((obj) => (obj.name).toString() === (userName).toString())
     if (filtered.length === 0) {
       if ((userName).trim().length > 0) {
@@ -65,42 +71,101 @@ const Signup = ({ navigation }) => {
 
   }
   return (
-    <SafeAreaView>
+    <ImageBackground
+      style={styles.background}
+      source={require('./assets/login.png')}
+    >
       <View>
-        <Text>User name</Text>
+        <Text style={styles.heading}>User name</Text>
         <TextInput
+          style={styles.body}
           placeholder='Enter User Name'
+          placeholderTextColor='#233EE8'
           value={userName}
           onChangeText={(e) => setUserName(e)}
         />
       </View>
       <View>
-        <Text>Password</Text>
+        <Text style={styles.heading}>Password</Text>
         <TextInput
+          style={styles.body}
           placeholder='New Password'
+          placeholderTextColor='#233EE8'
           value={password}
           onChangeText={(e) => setPassword(e)}
         />
       </View>
-      <View>
-        <Text>Retype Password</Text>
+      <View >
+        <Text style={styles.heading}>Retype Password</Text>
         <TextInput
+          style={styles.body}
           placeholder='Confirm New Password'
+          placeholderTextColor='#233EE8'
           value={retypePassword}
           onChangeText={(e) => setRetypePassword(e)}
         />
       </View>
-      <View style={styles.button}>
-        <Button title='SignIn' onPress={handleSignUp} />
+      <View>
+        <TouchableOpacity onPress={handleSignUp} >
+          <Text style={styles.button}>SignIn</Text>
+        </TouchableOpacity>
       </View>
-    </SafeAreaView>
+      <View>
+        <TouchableOpacity onPress={handleCancel} >
+          <Text style={styles.button}>Cancel</Text>
+        </TouchableOpacity>
+      </View>
+    </ImageBackground>
   )
 }
 
 const styles = StyleSheet.create({
   button: {
-    padding: 50,
-    margin: 20,
+    textAlign: 'center',
+    marginTop: 15,
+    marginBottom: 15,
+    borderColor: "#000",
+    borderWidth: 1,
+    marginLeft: 120,
+    marginRight: 120,
+    padding: 8,
+    backgroundColor: "#10491D",
+    color: "#fff",
+    borderRadius: 10,
+    fontSize: 15,
+    fontWeight: 'bold'
+  },
+  // Background Image
+  background: {
+    flex: 1,
+    justifyContent: 'center'
+  },
+  // Text
+  heading: {
+    color: '#000',
+    marginTop: 20,
+    marginBottom: 20,
+    fontSize: 20,
+    fontWeight: 'bold'
+  },
+  //TextInput
+  body: {
+    fontSize: 15,
+    borderBottomColor: '#000',
+    borderWidth: 1
+  },
+  // login container
+  border: {
+    borderColor: '#000',
+    margin: 10,
+    padding: 10
+  },
+  // SignUp warning Text
+  warning: {
+    color: 'black',
+    fontSize: 15,
+    fontWeight: 'bold',
+    textAlign: 'center'
   }
 })
 
